@@ -1,3 +1,4 @@
+import { Routes, Route, Navigate } from 'react-router-dom' // تأكد من استيراد Routes و Route فقط
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './contexts/AuthContext'
 import { ThemeProvider } from './contexts/ThemeContext'
@@ -21,7 +22,7 @@ export default function App() {
     <ThemeProvider>
       <AuthProvider>
         <StoreProvider>
-          <BrowserRouter>
+            {/* تم حذف BrowserRouter من هنا نهائياً */}
             <SupabaseSetupNotice />
             <Toaster position="top-right" toastOptions={{ duration: 3500 }} />
             <BackToTop />
@@ -51,7 +52,6 @@ export default function App() {
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-          </BrowserRouter>
         </StoreProvider>
       </AuthProvider>
     </ThemeProvider>

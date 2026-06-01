@@ -9,12 +9,18 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   const fetchProfile = async (userId) => {
+    if (!supabase) return null
     const { data } = await supabase.from('profiles').select('*').eq('id', userId).single()
     setProfile(data)
     return data
   }
 
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
       if (session?.user) fetchProfile(session.user.id)
@@ -32,12 +38,14 @@ export function AuthProvider({ children }) {
   }, [])
 
   const signIn = async (email, password) => {
+    if (!supabase) throw new Error('Supabase is not configured')
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) throw error
     return data
   }
 
   const signOut = async () => {
+    if (!supabase) return
     await supabase.auth.signOut()
     setProfile(null)
   }

@@ -11,6 +11,10 @@ export function StoreProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   const fetchAll = useCallback(async () => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
     const [p, c, pr, s] = await Promise.all([
       supabase.from('products').select('*, categories(name)').order('created_at', { ascending: false }),
       supabase.from('categories').select('*').order('name'),
@@ -26,6 +30,7 @@ export function StoreProvider({ children }) {
 
   useEffect(() => {
     fetchAll()
+    if (!supabase) return
 
     const channels = [
       supabase.channel('products').on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, () => {

@@ -15,6 +15,7 @@ import ProductForm from './pages/admin/ProductForm'
 import Promotions from './pages/admin/Promotions'
 import Settings from './pages/admin/Settings'
 import BackToTop from './components/BackToTop'
+import SupabaseSetupNotice from './components/SupabaseSetupNotice'
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
       <AuthProvider>
         <StoreProvider>
           <BrowserRouter>
+            <SupabaseSetupNotice />
             <Toaster position="top-right" toastOptions={{ duration: 3500 }} />
             <BackToTop />
             <Routes>

@@ -73,4 +73,14 @@ Phone number: **Settings** in admin (stored in Supabase, not in code).
 
 ## Deploy
 
-Build: `npm run build` → deploy `dist/` to Vercel/Netlify with env vars `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+Build: `npm run build` → deploy `dist/` to Vercel/Netlify.
+
+### Vercel deployment
+
+1. Set **Root Directory** to `boutique-app` (if the repo root is the parent folder).
+2. **Environment variables** (Project → Settings → Environment Variables) — required at **build** time:
+   - `VITE_SUPABASE_URL` — e.g. `https://your-project.supabase.co`
+   - `VITE_SUPABASE_ANON_KEY` — anon/publishable key from Supabase → API
+3. Apply to **Production**, **Preview**, and **Development**, then **Redeploy** the latest deployment.
+
+Without these variables the site used to show only a blank pink page; the app now loads but shows a setup banner until vars are added.
